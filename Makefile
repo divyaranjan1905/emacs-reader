@@ -16,7 +16,7 @@ MUPDF_DIR := $(SUBMODULE_DIR)/mupdf
 
 # Shared library extension and object file extension per platform
 ifeq ($(PLATFORM),windows)
-  SHARED_EXT := .dll
+  SHARED_EXT := .so
   OBJ_EXT := .obj
   CC := gcc
   CFLAGS += -DWIN32 -msse4.1

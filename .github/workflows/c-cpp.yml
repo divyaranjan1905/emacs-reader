@@ -53,9 +53,11 @@ jobs:
             mingw-w64-x86_64-gcc
             git
             pkg-config
+            emacs
 
       - name: Build with GCC and Make
         shell: msys2 {0}
         run: |
           gcc --version
           make all
+          emacs --eval '(module-load "render-core.so")'
