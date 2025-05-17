@@ -22,14 +22,14 @@ ifeq ($(PLATFORM),windows)
   CFLAGS += -DWIN32 -msse4.1
   LDFLAGS := -shared -L$(MUPDF_DIR)/build/shared-release -lmupdf
   RPATHS :=
-  MUPDF_LIB := libmupdf.dll
+  MUPDF_LIB := libmupdf.so.26.0
   NEED_MUPDF_BUILD := yes
 else ifeq ($(PLATFORM),macos)
   SHARED_EXT := .dylib
+  HOMEBREW_PREFIX := $(shell brew --prefix)
   OBJ_EXT := .o
   CC := gcc
-  CFLAGS += -DMACOS
-  HOMEBREW_PREFIX := $(shell brew --prefix)
+  CFLAGS += -DMACOS -I/$(HOMEBREW_PREFIX)/include
   LDFLAGS := -dynamiclib -L$(HOMEBREW_PREFIX)/lib -lmupdf
   RPATHS := -Wl,-rpath,@loader_path/../lib
   MUPDF_LIB := /opt/homebrew/lib/libmupdf.26.dylib
