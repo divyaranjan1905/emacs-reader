@@ -29,7 +29,8 @@ else ifeq ($(PLATFORM),macos)
   OBJ_EXT := .o
   CC := gcc
   CFLAGS += -DMACOS
-  LDFLAGS := -dynamiclib -lmupdf
+  HOMEBREW_PREFIX := $(shell brew --prefix)
+  LDFLAGS := -dynamiclib -L$(HOMEBREW_PREFIX)/lib -lmupdf
   RPATHS := -Wl,-rpath,@loader_path/../lib
   MUPDF_LIB := /opt/homebrew/lib/libmupdf.26.dylib
   NEED_MUPDF_BUILD := no
