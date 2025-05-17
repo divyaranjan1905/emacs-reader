@@ -19,7 +19,7 @@ ifeq ($(PLATFORM),windows)
   SHARED_EXT := .dll
   OBJ_EXT := .obj
   CC := gcc
-  CFLAGS += -DWIN32
+  CFLAGS += -DWIN32 -msse4.1
   LDFLAGS := -shared -L$(MUPDF_DIR)/build/shared-release -lmupdf
   RPATHS :=
   MUPDF_LIB := libmupdf.dll
