@@ -54,6 +54,7 @@ jobs:
             make
             mingw-w64-x86_64-gcc
             git
+            pkg-config
 
       - name: Build with GCC and Make
         shell: msys2 {0}
