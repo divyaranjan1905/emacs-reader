@@ -60,4 +60,3 @@ jobs:
         run: |
           gcc --version
           make all
-          emacs -Q --batch --eval '(module-load "/d/a/emacs-reader/render-core.so")' </dev/null
