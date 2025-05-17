@@ -1,4 +1,4 @@
-### Cross-platform Makefile for Emacs Reader’s dynamic module
+### Makefile for Emacs Reader’s dynamic module
 
 # Detect platform
 OS_NAME := $(shell uname)
