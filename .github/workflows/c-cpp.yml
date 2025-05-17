@@ -53,6 +53,7 @@ jobs:
           install: >-
             make
             mingw-w64-x86_64-gcc
+	    git
 
       - name: Build with GCC and Make
         shell: msys2 {0}
