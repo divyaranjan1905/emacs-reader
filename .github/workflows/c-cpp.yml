@@ -7,18 +7,52 @@ on:
     branches: [ "master" ]
 
 jobs:
-  build:
 
+  build-macos:
     runs-on: macos-latest
-
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
       with:
-        submodules: true
+        submodules: recursive
     - name: Install dependencies
       run: |
         brew update &&
         brew install gcc make mupdf
     - name: make
       run: make all
+
+  build-gnu-linux:
+      runs-on: ubuntu-latest
+      steps:
+      - name: Checkout code
+      uses: actions/checkout@v3
+      with:
+	submodules: recursive
+
+      - name: Install dependencies
+      	run: sudo apt-get install -y gcc make git
+      - name: make
+      	run: make all
+
+  build-windows:
+      runs-on: windows-latest
+      steps:
+     - name: Checkout code
+      uses: actions/checkout@v3
+      with:
+        submodules: recursive
+
+     - name: Install MSYS2
+        uses: msys2/setup-msys2@v2
+        with:
+          update: true
+          install: >-
+            make
+            mingw-w64-x86_64-gcc
+
+     - name: Build with GCC and Make
+        shell: msys2 {0}
+        run: |
+          gcc --version
+          make
