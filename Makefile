@@ -74,7 +74,7 @@ endif
 ifeq ($(NEED_MUPDF_BUILD),yes)
 $(LIBMUPDF):
 	git submodule update --init --recursive
-	$(MAKE) -C $(MUPDF_DIR) shared USE_SYSTEM_LIBS=no XCFLAGS="-DLCMS2MT_PREFIX=lcms2mt_"
+	$(MAKE) -C $(MUPDF_DIR) shared USE_SYSTEM_LIBS=no XCFLAGS="-DLCMS2MT_PREFIX=lcms2mt_ -msse4.1"
 endif
 
 # Compile C sources into platform-specific object files
