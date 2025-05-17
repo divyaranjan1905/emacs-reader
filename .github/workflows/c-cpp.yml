@@ -17,7 +17,8 @@ jobs:
       with:
         submodules: true
     - name: Install dependencies
-      run:
+      run: |
+        brew update &&
         brew install gcc make mupdf
     - name: make
       run: make all
