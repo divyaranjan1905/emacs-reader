@@ -1,4 +1,4 @@
-### Makefile for Emacs Reader’s dynamic module
+### Cross-platform Makefile for Emacs Reader’s dynamic module
 
 # Detect platform
 OS_NAME := $(shell uname)
@@ -23,14 +23,16 @@ ifeq ($(PLATFORM),windows)
   LDFLAGS := -shared -L$(MUPDF_DIR)/build/shared-release -lmupdf
   RPATHS :=
   MUPDF_LIB := libmupdf.dll
+  NEED_MUPDF_BUILD := yes
 else ifeq ($(PLATFORM),macos)
   SHARED_EXT := .dylib
   OBJ_EXT := .o
   CC := gcc
   CFLAGS += -DMACOS
-  LDFLAGS := -dynamiclib -L$(MUPDF_DIR)/build/shared-release -lmupdf
-  RPATHS := -Wl,-rpath,@loader_path/../dep/mupdf/build/shared-release
-  MUPDF_LIB := libmupdf.26.dylib
+  LDFLAGS := -dynamiclib -lmupdf
+  RPATHS := -Wl,-rpath,@loader_path/../lib
+  MUPDF_LIB := /opt/homebrew/lib/libmupdf.26.dylib
+  NEED_MUPDF_BUILD := no
 else
   SHARED_EXT := .so
   OBJ_EXT := .o
@@ -38,12 +40,13 @@ else
   CFLAGS += -DLINUX
   LDFLAGS := -shared -L$(MUPDF_DIR)/build/shared-release -lmupdf
   RPATHS := -Wl,-rpath,$(MUPDF_DIR)/build/shared-release/
-  MUPDF_LIB := libmupdf.so.26.0
+  MUPDF_LIB := $(MUPDF_DIR)/build/shared-release/libmupdf.so.26.0
+  NEED_MUPDF_BUILD := yes
 endif
 
 # Module filenames and library paths
 LIB_NAME := render-core$(SHARED_EXT)
-LIBMUPDF := $(MUPDF_DIR)/build/shared-release/$(MUPDF_LIB)
+LIBMUPDF := $(MUPDF_LIB)
 
 # Compiler and headers
 MUPDF_HEADERS := $(MUPDF_DIR)/include/
@@ -58,17 +61,22 @@ OBJS := $(SRCS:%.c=%$(OBJ_EXT))
 # Default build target
 all: $(LIB_NAME)
 
-# Link the dynamic module, ensuring libmupdf is built first
+# Link the dynamic module
+ifeq ($(NEED_MUPDF_BUILD),yes)
 $(LIB_NAME): $(OBJS) $(LIBMUPDF)
+else
+$(LIB_NAME): $(OBJS)
+endif
 	$(CC) $(LDFLAGS) $(RPATHS) -o $@ $^
 
-# Update and build mupdf submodule
+# Update and build mupdf submodule if needed
+ifeq ($(NEED_MUPDF_BUILD),yes)
 $(LIBMUPDF):
 	git submodule update --init --recursive
 	$(MAKE) -C $(MUPDF_DIR) shared USE_SYSTEM_LIBS=no XCFLAGS="-DLCMS2MT_PREFIX=lcms2mt_"
+endif
 
 # Compile C sources into platform-specific object files
-# Pattern-rule automatically adapts to OBJ_EXT
 %$(OBJ_EXT): %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
