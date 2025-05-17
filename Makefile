@@ -19,43 +19,39 @@ ifeq ($(PLATFORM),windows)
   SHARED_EXT := .dll
   OBJ_EXT := .obj
   CC := gcc
-  CFLAGS := -DWIN32 -msse4.1 -Wall -Wextra -fPIC
+  CFLAGS += -DWIN32 -msse4.1
   LDFLAGS := -shared -L$(MUPDF_DIR)/build/shared-release -lmupdf
   RPATHS :=
   MUPDF_LIB := libmupdf.dll
   NEED_MUPDF_BUILD := yes
-  MUPDF_SUBFLAGS := -msse4.1
 else ifeq ($(PLATFORM),macos)
   SHARED_EXT := .dylib
   OBJ_EXT := .o
   CC := gcc
-  HOME_BREW_PREFIX := $(shell brew --prefix)
-  CFLAGS := -DMACOS -Wall -Wextra -fPIC
-  LDFLAGS := -dynamiclib -L$(HOME_BREW_PREFIX)/lib -lmupdf
+  CFLAGS += -DMACOS
+  HOMEBREW_PREFIX := $(shell brew --prefix)
+  LDFLAGS := -dynamiclib -L$(HOMEBREW_PREFIX)/lib -lmupdf
   RPATHS := -Wl,-rpath,@loader_path/../lib
-  MUPDF_LIB := $(HOME_BREW_PREFIX)/lib/libmupdf.26.dylib
+  MUPDF_LIB := /opt/homebrew/lib/libmupdf.26.dylib
   NEED_MUPDF_BUILD := no
-  MUPDF_SUBFLAGS :=
 else
   SHARED_EXT := .so
   OBJ_EXT := .o
   CC := gcc
-  CFLAGS := -DLINUX -Wall -Wextra -fPIC
+  CFLAGS += -DLINUX
   LDFLAGS := -shared -L$(MUPDF_DIR)/build/shared-release -lmupdf
   RPATHS := -Wl,-rpath,$(MUPDF_DIR)/build/shared-release/
   MUPDF_LIB := $(MUPDF_DIR)/build/shared-release/libmupdf.so.26.0
   NEED_MUPDF_BUILD := yes
-  MUPDF_SUBFLAGS :=
 endif
 
 # Module filenames and library paths
 LIB_NAME := render-core$(SHARED_EXT)
 LIBMUPDF := $(MUPDF_LIB)
 
-# Include paths
-MUPDF_HEADERS := -I$(MUPDF_DIR)/include
-EMACS_HEADERS := -I$(CURDIR)/render
-CFLAGS += $(MUPDF_HEADERS) $(EMACS_HEADERS)
+# Compiler and headers
+MUPDF_HEADERS := $(MUPDF_DIR)/include/
+CFLAGS += -Wall -Wextra -fPIC -I$(MUPDF_HEADERS) -I$(CURDIR)/render/emacs-module.h
 
 # Source files and object targets
 SRCS := render/elisp-helpers.c render/mupdf-helpers.c render/render-core.c
@@ -78,9 +74,7 @@ endif
 ifeq ($(NEED_MUPDF_BUILD),yes)
 $(LIBMUPDF):
 	git submodule update --init --recursive
-	cd $(MUPDF_DIR) && \
-	$(MAKE) shared USE_SYSTEM_LIBS=no \
-	  CFLAGS="$(MUPDF_SUBFLAGS)" XCFLAGS="$(MUPDF_SUBFLAGS)"
+	$(MAKE) -C $(MUPDF_DIR) shared USE_SYSTEM_LIBS=no XCFLAGS="-DLCMS2MT_PREFIX=lcms2mt_"
 endif
 
 # Compile C sources into platform-specific object files
