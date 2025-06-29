@@ -31,7 +31,7 @@ jobs:
           submodules: recursive
 
       - name: Install dependencies
-        run: sudo apt-get update && sudo apt-get install -y gcc make git
+        run: sudo apt-get update && sudo apt-get install -y gcc make git mupdf libmupdf-dev
 
       - name: Build with make
         run: make all
