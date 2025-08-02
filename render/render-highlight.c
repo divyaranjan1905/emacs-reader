@@ -15,10 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "elisp-helpers.h"
-#include "emacs-module.h"
 #include "misc-helpers.h"
-
-int plugin_is_GPL_compatible;
 
 /*
 Draws a highlight on the PPM.
@@ -103,24 +100,4 @@ emacs_draw_highlight(emacs_env *env, ptrdiff_t nargs, emacs_value args[],
 	    env, env->intern(env, "plist-put"), 3,
 	    (emacs_value[]){ plist, env->intern(env, ":data"), new_data });
 	return plist;
-}
-
-int
-emacs_module_init(struct emacs_runtime *runtime)
-{
-	emacs_env *env = runtime->get_environment(runtime);
-	if (!env)
-	{
-		fprintf(stderr, "Failed to get Emacs environment.\n");
-		return 1;
-	}
-
-	register_module_func(env, emacs_draw_highlight,
-			     "reader-dyn--draw-highlight", 7, 7,
-			     "Draws a highlight on the document given its "
-			     "coordinates, dimensions, alpha and hex");
-
-	provide(env, "render-highlight");
-
-	return 0;
 }
