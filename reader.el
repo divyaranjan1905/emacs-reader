@@ -32,7 +32,7 @@
 ;;; Code:
 
 (require 'image)
-(require 'render-core)
+(require 'reader-render)
 
 (defgroup reader nil
   "Group for Reader’s customizations."
