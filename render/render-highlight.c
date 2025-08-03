@@ -33,8 +33,8 @@ emacs_draw_highlight(emacs_env *env, ptrdiff_t nargs, emacs_value args[],
 	int rw = env->extract_integer(env, args[3]);
 	int rh = env->extract_integer(env, args[4]);
 	double alpha = env->extract_float(env, args[5]);
-	char *hex;
-	ptrdiff_t hex_size;
+	char *hex = malloc(sizeof(char *));
+	size_t hex_size = 0;
 	if (!elisp_2_c_str(env, args[6], &hex, &hex_size))
 		fprintf(stderr, "failed to convert hex string\n");
 	if (*hex == '#')

@@ -23,6 +23,7 @@
 #include "elisp-helpers.h"
 #include "emacs-module.h"
 #include "render-core.h"
+#include "render-highlight.h"
 #include "render-theme.h"
 #include "render-threads.h"
 
@@ -87,6 +88,10 @@ emacs_module_init(struct emacs_runtime *runtime)
 	register_module_func(env, emacs_doc_window_close,
 			     "reader-dyn--window-close", 1, 1,
 			     "Frees EmacsWinState.");
+
+	register_module_func(env, emacs_draw_highlight,
+			     "reader-dyn--draw-highlight", 7, 7,
+			     "Draws a highlight on the PPM.");
 
 	// Register buffer-local variables.
 	permanent_buffer_local_var(env, "reader-current-doc-pagecount");

@@ -103,7 +103,7 @@ endif
 
 # --- Build Rules ---
 LIB_NAME := reader-render.$(SO)
-SRCS := render/elisp-helpers.c render/mupdf-helpers.c render/render-threads.c render/reader-render.c render/render-core.c render/render-theme.c
+SRCS := render/elisp-helpers.c render/mupdf-helpers.c render/misc-helpers.c render/render-threads.c render/reader-render.c render/render-core.c render/render-theme.c render/render-highlight.c
 OBJS := $(SRCS:%.c=%.o)
 
 .PHONY: all clean
