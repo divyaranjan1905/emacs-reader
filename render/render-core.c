@@ -100,13 +100,21 @@ draw_page_thread(void *arg)
 			fprintf(stderr, "Display list of page %d is empty\n",
 				cp->page_num);
 		}
+
+		// Create a new pixmap from display list
 		cp->pixmap = fz_new_pixmap_from_display_list(
-		    ctx, cp->display_list, ctm, fz_device_rgb(ctx), 0);
+		    ctx, cp->display_list, cp->ctm, fz_device_rgb(ctx), 0);
+
+		// Create a new stext for the page from displa list
+		cp->stext = fz_new_stext_page_from_display_list(
+		    ctx, cp->display_list, NULL);
+
 		if (doc_state->invert)
 		{
 			fz_invert_pixmap_luminance(ctx, cp->pixmap);
 			fz_gamma_pixmap(ctx, cp->pixmap, 1 / 1.4f);
 		}
+
 		cp->imgh = fz_pixmap_height(ctx, cp->pixmap)
 			   / doc_state->frame_scale;
 		cp->imgw

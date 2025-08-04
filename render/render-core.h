@@ -37,6 +37,7 @@ typedef enum
 typedef struct
 {
 	int page_num;
+	fz_stext_page *stext;
 	fz_display_list *display_list;
 	fz_matrix ctm;
 	fz_pixmap *pixmap;
