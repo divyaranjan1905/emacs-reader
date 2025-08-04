@@ -80,7 +80,6 @@ draw_page_thread(void *arg)
 {
 	fz_output *out = NULL;
 	fz_buffer *buf = NULL;
-	fz_matrix ctm;
 
 	DrawThreadArgs *args = (DrawThreadArgs *)arg;
 	DocState *doc_state = args->doc_state;
@@ -89,8 +88,8 @@ draw_page_thread(void *arg)
 
 	fz_context *ctx = fz_clone_context(doc_state->ctx);
 
-	ctm = fz_transform_page(doc_state->page_bbox, win_state->resolution,
-				win_state->rotate);
+	cp->ctm = fz_transform_page(doc_state->page_bbox, win_state->resolution,
+				    win_state->rotate);
 	cp->imgh = 0;
 	cp->imgw = 0;
 

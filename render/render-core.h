@@ -38,6 +38,7 @@ typedef struct
 {
 	int page_num;
 	fz_display_list *display_list;
+	fz_matrix ctm;
 	fz_pixmap *pixmap;
 	int imgw, imgh;
 	char *img_data;
