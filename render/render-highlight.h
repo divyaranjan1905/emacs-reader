@@ -17,5 +17,5 @@
 #include "emacs-module.h"
 
 emacs_value
-emacs_draw_highlight(emacs_env *env, ptrdiff_t nargs, emacs_value args[],
-		     void *data);
+emacs_draw_highlight_image(emacs_env *env, ptrdiff_t nargs, emacs_value args[],
+			   void *data);

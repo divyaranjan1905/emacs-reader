@@ -89,8 +89,8 @@ emacs_module_init(struct emacs_runtime *runtime)
 			     "reader-dyn--window-close", 1, 1,
 			     "Frees EmacsWinState.");
 
-	register_module_func(env, emacs_draw_highlight,
-			     "reader-dyn--draw-highlight", 7, 7,
+	register_module_func(env, emacs_draw_highlight_image,
+			     "reader-dyn--draw-highlight-image", 7, 7,
 			     "Draws a highlight on the PPM.");
 
 	// Register buffer-local variables.

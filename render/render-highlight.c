@@ -19,12 +19,12 @@
 
 /*
 Draws a highlight on the PPM.
-Takes a plist as input.
+Takes as input the Elisp image spec and the dimensions & alpha of the highlight.
  */
 
 emacs_value
-emacs_draw_highlight(emacs_env *env, ptrdiff_t nargs, emacs_value args[],
-		     void *data)
+emacs_draw_highlight_image(emacs_env *env, ptrdiff_t nargs, emacs_value args[],
+			   void *data)
 {
 	// unpack args
 	emacs_value plist = args[0];
