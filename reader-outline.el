@@ -29,8 +29,8 @@
 ;;;###autoload
 (defun reader--outline-make-imenu-entry (plist)
   "Convert one outline PLIST to an imenu entry."
-  (let* ((title    (plist-get plist :title))
-         (page     (plist-get plist :page))
+  (let* ((title (plist-get plist :title))
+         (page (1+ (plist-get plist :page))) ; MuPDF does 0-indexing
          (children (plist-get plist :children)))
     (if children
         (cons title
@@ -90,8 +90,8 @@ document it was created from."
 Each heading title is its own clickable button."
   (dolist (entry outline)
     (let ((title (plist-get entry :title))
-          (page  (1+ (plist-get entry :page))) ; MuPDF does 0-indexing
-          (children (plist-get entry :children)))
+          (page (1+ (plist-get entry :page))) ; MuPDF does 0-indexing
+	  (children (plist-get entry :children)))
       ;; This cannot be part of label (title) because that will
       ;; obscure the outline TAB bindings with button bindings.
       (insert (concat (make-string level ?*) " "))
