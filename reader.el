@@ -782,10 +782,7 @@ Keybindings:
     (reader--render-buffer))
 
   (setq-local imenu-create-index-function #'reader--outline-imenu-create-index
-	      imenu-default-goto-function #'reader--outline-imenu-goto
-	      imenu-submenus-on-top nil
-	      imenu-sort-function nil
-              imenu-auto-rescan t)
+	      imenu-default-goto-function #'reader--outline-imenu-goto)
 
   (use-local-map reader-mode-map)
   (setq major-mode 'reader-mode)
