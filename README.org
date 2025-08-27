@@ -197,7 +197,7 @@ I have been streaming the development of this package on [[https://tv.dyne.org/c
 If you wish to join the discussion for the package, you should join the IRC channel =#phi-mu-lambda= on [[https://libera.chat/][Libera]].
 
 * License
-Unless another license is listed, all files in emacs-reader are licensed under the GNU General Public License version 3 (or at your option), any later version. See [[file:LICENSE][LICENSE]] and [[file:CONTRIBUTORS][CONTRIBUTORS]] for further details.
+Unless another license is listed, all files in emacs-reader are licensed under the GNU General Public License version 3 (or at your option, any later version). See [[file:COPYING][COPYING]] and [[file:CONTRIBUTORS][CONTRIBUTORS]] for further details.
 
 The logo of the project was made by Divya Ranjan Pattanaik and is shared under [[http://creativecommons.org/licenses/by-sa/4.0/][CC-BY-SA-4.0]]. The logo uses the following artworks from GNU:
 
