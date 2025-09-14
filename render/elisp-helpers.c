@@ -20,6 +20,8 @@
 #include "elisp-helpers.h"
 #include "emacs-module.h"
 #include "render-core.h"
+#include <stddef.h>
+#include <string.h>
 
 /**
  * elisp_2_c_str - Convert an Elisp string to a C string.
@@ -411,6 +413,53 @@ display_img_to_overlay(emacs_env *env, EmacsWinState *win_state, char *img_data,
 	env->funcall(env, env->intern(env, "clear-image-cache"), 0, NULL);
 }
 
+bool
+is_valid_utf8(char *s, size_t len)
+{
+	size_t i = 0;
+	while (i < len)
+	{
+		unsigned char c = s[i];
+		size_t remainder = 0;
+
+		if (c <= 0x7f)
+		{
+			i++;
+			continue;
+		}
+		else if ((c & 0xE0) == 0xC0)
+		{
+			remainder = 1;
+			if (c < 0xC2)
+				return false;
+		}
+		else if ((c & 0xF0) == 0xE0)
+		{
+			remainder = 2;
+		}
+		else if ((c & 0xF8) == 0xF0)
+		{
+			remainder = 3;
+			if (c > 0xF4)
+				return false;
+		}
+		else
+		{
+			return false;
+		}
+
+		if (i + remainder >= len)
+			return false;
+		for (size_t j = 1; j <= remainder; j++)
+		{
+			if ((s[i + j] & 0xC0) != 0x80)
+				return false;
+		}
+		i += remainder + 1;
+	}
+	return true;
+}
+
 /**
  * Convert a fz_outline tree to an Emacs plist structure.
  *
@@ -439,6 +488,13 @@ outline2plist(emacs_env *env, fz_outline *node)
 		if (!node->title)
 		{
 			node = node->next;
+			continue;
+		}
+
+		if (!is_valid_utf8(node->title, strlen(node->title)))
+		{
+			return outline_plist;
+			emacs_message(env, "String of Outline is not UTF-8");
 			continue;
 		}
 
