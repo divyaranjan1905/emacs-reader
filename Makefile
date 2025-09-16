@@ -20,6 +20,7 @@
 OS_NAME := $(shell uname)
 HAVE_GUIX := $(shell command -v guix >/dev/null 2>&1 && echo yes || echo no)
 HAVE_NIX  := $(shell command -v nix >/dev/null 2>&1 && echo yes || echo no)
+HAVE_DNF  := $(shell command -v dnf >/dev/null 2>&1 && echo yes || echo no)
 ifneq ($(filter MINGW%, $(OS_NAME)),)
   HAVE_MINGW64 := yes
 else
@@ -32,6 +33,9 @@ ifeq ($(HAVE_GUIX),yes)
   USE_PKGCONFIG := no
 else ifeq ($(HAVE_NIX),yes)
   $(info Nix detected: skipping pkg-config checks.)
+  USE_PKGCONFIG := no
+else ifeq ($(HAVE_DNF),yes)
+  $(info dnf detected: skipping pkg-config checks.)
   USE_PKGCONFIG := no
 else ifeq ($(OS_NAME),Darwin)
   $(info macOS detected: skipping pkg-config and using Homebrew for MuPDF paths.)
