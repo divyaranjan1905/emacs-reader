@@ -3,13 +3,7 @@
 
 ((nil . ((mode . envrc)
 	 (require-final-newline . t)
-	 (show-trailing-whitespace . t)
-	 (eval . (defun reader-dev-generate-autoloads nil
-		   "Create autoload for reader."
-		   (interactive)
-		   (let ((root (project-root (project-current))))
-		     (loaddefs-generate root
-					(file-name-concat root "reader-autoloads.el")))))))
+	 (show-trailing-whitespace . t)))
  (c-mode . ((eval . (eglot-ensure))
 	    (before-save-hook . (eglot-format-buffer))
 	    (indent-tabs-mode . t)

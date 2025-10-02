@@ -118,3 +118,6 @@ $(LIB_NAME): $(OBJS)
 
 clean:
 	rm -f $(OBJS) $(LIB_NAME)
+
+autoloads:
+	emacs --script ./generate-autoloads.el
