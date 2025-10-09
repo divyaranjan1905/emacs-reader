@@ -2,6 +2,15 @@
 See =(info "(standards) NEWS File")=. User facing changes per release
 are to be recorded here.
 
+* Version 0.4.0
+- Per window pages, zooming, etc. support, which means that it is now
+  possible to view different pages of the same document (from the same
+  buffer) on different windows.
+- Change 'screenful' to 'screen' in command names.
+- Make =reader-reset-size= interactive.
+- Overall stability improvements when opening files, accessing
+  bookmarks, and outlines.
+
 * Version 0.3.2
 - Fix reader-outline when original source buffer is killed.
 - Correct keybindings for C-v/M-v.
