@@ -20,6 +20,7 @@ Tushar <tusharhero@sdf.org>:
 - changed or added to reader.el, reader-saveplace.el, and reader-outline.el
 - changed or added to elisp-helpers.c, and render-core.c.
 - updated docstrings in both C and Elisp modules for v0.3.0
+- added to Makefile.
 
 prom (Codeberg user):
 - fixed and updated support for MS Windows in the Makefile.
