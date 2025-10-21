@@ -61,7 +61,7 @@ The only thing this package depends on is =mupdf=, at minimum =v1.26.0=.
 For now, until the package has been published to GNU ELPA, the only way to install and use it is through locally cloning the repo and building it. This is different across platforms:
 
 ** GNU/Linux
-On GNU/Linux all you need is: =gcc= and =make=. Then you can simply install through the Emacs’ built-in =package-vc= or the [[https://github.com/radian-software/straight.el][straight]] package manager. The built-in =package-vc= still has some quirks, but here are the recipes for both:
+On GNU/Linux, all you need is: =gcc= and =make=. Then you can simply install through the Emacs’ built-in =package-vc= or the [[https://github.com/radian-software/straight.el][straight]] package manager. The built-in =package-vc= still has some quirks, but here are the recipes for both:
 
 - =use-package= with =package-vc=:
    #+begin_src emacs-lisp
@@ -80,7 +80,7 @@ On GNU/Linux all you need is: =gcc= and =make=. Then you can simply install thro
    #+end_src
 
 *** GNU Guix
-Using the GNU Guix package manager, you can get emacs-reader through the [[https://codeberg.org/divyaranjan/divya-lambda][divya-lambda]] Guix channel. Follow the instructions there to add the Guix channel to your configuration. Then all that remains to do is,
+Using the [[https://guix.gnu.org/][GNU Guix]] package manager, you can get emacs-reader through the [[https://codeberg.org/divyaranjan/divya-lambda][divya-lambda]] Guix channel. Follow the instructions there to add the Guix channel to your configuration. Then all that remains to do is,
 #+begin_src bash
   guix install emacs-reader
 #+end_src
@@ -101,19 +101,17 @@ You may replace the branch name as you need.
 Follow the instructions [[https://codeberg.org/divyaranjan/emacs-reader/issues/115][here]].
 
 ** MacOS
-Since MacOS’ package manager Homebrew already has the latest version of MuPDF (1.26.0), you don’t need the submodule at all. You just need to do:
+Since MacOS’ package manager, Homebrew, already has the latest version of MuPDF (1.26.0), you don’t need the submodule at all. You just need to do:
 #+begin_src sh
   brew install gcc
   brew install make
   brew install mupdf
 #+end_src
 
-And then use the straight or package-vc recipe from the GNU/Linux section.
+And then use the straight or package-vc recipe from the [[* GNU/Linux][GNU/Linux]] section.
 
 ** Windows
-With Windows, you need MSYS2 toolchain, first install MSYS2, then choose one of the environment that MSYS2 provided, on a modern
-64bit Windows system, you want either =MINGW64= or =UCRT64=. If you never try MSYS2 before, we recommend =MINGW64= since this is the
-environment that used to build the official GNU/Emacs' Windows version.
+With Windows, you need MSYS2 toolchain, first install MSYS2, then choose one of the environment that MSYS2 provided, on a modern 64bit Windows system, you want either =MINGW64= or =UCRT64=. If you have never tried MSYS2 before, we recommend =MINGW64= since this is the environment that used to build the official GNU/Emacs' Windows version.
 
 The following steps assume you use =MINGW64=:
 
@@ -122,7 +120,7 @@ First install the build dependencies:
 pacman -S make mingw-w64-x86_64-gcc git pkg-config
 #+end_src
 
-Then you need install libmupdf, unfortunately right now MSYS2's repo only has MuPDF 1.24.3, so you need this [[https://github.com/msys2/MINGW-packages/pull/24550][PR]],
+Then you need install =libmupdf=, unfortunately right now MSYS2's repo only has MuPDF 1.24.3, so you need this [[https://github.com/msys2/MINGW-packages/pull/24550][PR]],
 there are 2 ways to use this PR:
 
 1. Download the pre-compiled package from the PR's CI, then use =pacman -U= to install the package file.
@@ -134,7 +132,7 @@ make all
 #+end_src
 
 ** Manual
-This section is about how to install this package manually. Intended to be used by developers.
+This section is about how to install this package manually. Intended to be used by developers and testers.
 
 After cloning the repository, follow the instructions from the previous section to install dependencies on your respective operating system.
 
@@ -152,9 +150,9 @@ You can also utilize =use-package= to do the same,
     :load-path "/path/to/emacs-reader")
 #+end_src
 
-To test emacs-reader in a default Emacs config, first generate the auto loads using =reader-dev-generate-autoloads=.
+To test emacs-reader in a default Emacs config, first generate the auto loads using =make autoloads=.
 #+begin_src shell
-  emacs -q -L . -l reader-autoloads.el
+  emacs -Q -L . -l reader-autoloads.el
 #+end_src
 This command adds the current directory to path, and loads =reader-autoloads.el=.
 
