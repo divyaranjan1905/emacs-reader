@@ -151,7 +151,6 @@ load_mupdf_doc(DocState *state)
 	fz_try(state->ctx)
 	{
 		state->doc = fz_open_document(state->ctx, state->path);
-		state->outline = fz_load_outline(state->ctx, state->doc);
 		state->pagecount = fz_count_pages(state->ctx, state->doc);
 	}
 	fz_catch(state->ctx)
@@ -159,6 +158,16 @@ load_mupdf_doc(DocState *state)
 		fprintf(stderr, "Could not open document\n");
 		fz_drop_context(state->ctx);
 		return EXIT_FAILURE;
+	}
+
+	fz_try(state->ctx)
+	{
+		state->outline = fz_load_outline(state->ctx, state->doc);
+	}
+	fz_catch(state->ctx)
+	{
+		fprintf(stderr, "Could not load outline\n");
+		fz_drop_outline(state->ctx, state->outline);
 	}
 
 	return EXIT_SUCCESS;
