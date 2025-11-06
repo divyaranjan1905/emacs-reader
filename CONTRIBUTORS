@@ -44,6 +44,10 @@ yangyingchao <yang.yingchao@qq.com>:
 
 - fixed =reader-open-doc= (PR #125).
 
+dominik martinez <dominikmartinez@pm.me> (Codeberg user dom2):
+
+- fixed crash when opening files with a corrupt outline.
+
 * highlighting settings
 # Local Variables:
 # mode: org
