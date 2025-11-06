@@ -120,4 +120,4 @@ clean:
 	rm -f $(OBJS) $(LIB_NAME)
 
 autoloads:
-	emacs --script ./generate-autoloads.el
+	emacs --batch --eval '(loaddefs-generate default-directory (file-name-concat default-directory "reader-autoloads.el"))'
