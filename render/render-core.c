@@ -422,9 +422,7 @@ emacs_load_doc(emacs_env *env, ptrdiff_t nargs, emacs_value *args, void *data)
 
 	if (!doc_state || !win_state)
 	{
-		emacs_message(env,
-			      "Document cannot be loaded into memory due to "
-			      "unsupported format or some other reason.");
+		emacs_message(env, "Document cannot be loaded into memory.");
 		return EMACS_NIL;
 	}
 
@@ -438,8 +436,13 @@ emacs_load_doc(emacs_env *env, ptrdiff_t nargs, emacs_value *args, void *data)
 		return EMACS_NIL;
 	}
 
-	init_main_ctx(doc_state);  // Creates mupdf context with locks
-	load_mupdf_doc(doc_state); // Opens the doc and sets pagecount
+	init_main_ctx(doc_state);	// Creates mupdf context with locks
+	if (!load_mupdf_doc(doc_state)) // Opens the doc and sets pagecount
+	{
+		emacs_message(env,
+			      "The document could not be loaded by MuPDF.");
+		return EMACS_NIL;
+	}
 	outline2plist(env, doc_state->outline);
 
 	doc_state->cached_pages_pool = malloc(
