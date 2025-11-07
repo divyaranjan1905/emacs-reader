@@ -437,7 +437,8 @@ emacs_load_doc(emacs_env *env, ptrdiff_t nargs, emacs_value *args, void *data)
 	}
 
 	init_main_ctx(doc_state);	// Creates mupdf context with locks
-	if (!load_mupdf_doc(doc_state)) // Opens the doc and sets pagecount
+	if (load_mupdf_doc(doc_state)
+	    == EXIT_FAILURE) // Opens the doc and sets pagecount
 	{
 		emacs_message(env,
 			      "The document could not be loaded by MuPDF.");
