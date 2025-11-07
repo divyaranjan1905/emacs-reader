@@ -79,6 +79,11 @@ On GNU/Linux, all you need is: =gcc= and =make=. Then you can simply install thr
      	      :pre-build ("make" "all")))
    #+end_src
 
+#+begin_center
+Note that sometimes you may need to run =make clean all= to get rid of
+old artifacts before recompiling.
+#+end_center
+
 *** GNU Guix
 Using the [[https://guix.gnu.org/][GNU Guix]] package manager, you can get emacs-reader through the [[https://codeberg.org/divyaranjan/divya-lambda][divya-lambda]] Guix channel. Follow the instructions there to add the Guix channel to your configuration. Then all that remains to do is,
 #+begin_src bash
