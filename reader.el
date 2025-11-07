@@ -163,8 +163,9 @@ other file format will simply not show up as a candidate."
   (switch-to-buffer (create-file-buffer document))
   (setq buffer-file-name document)
   (insert "\n")
-  (reader-dyn--load-doc (expand-file-name document))
-  (reader-mode))
+  (if (reader-dyn--load-doc (expand-file-name document))
+      (reader-mode)
+    (kill-buffer (current-buffer))))
 
 (reader--define-queue-command next-page ()
   "Go to the next page of the document."
