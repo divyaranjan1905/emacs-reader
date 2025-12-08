@@ -185,6 +185,10 @@ For understanding how dynamic modules work within Emacs, please consult the foll
 
 https://www.phimulambda.org/blog/emacs-dynamic-module.html
 
+* Presentation
+
+[[https://www.youtube.com/watch?v=KQBXTSg_Occ][Presentation in EmacsConf 2025]]
+
 * Live Streams
 
 I have been streaming the development of this package on [[https://tv.dyne.org/c/phimulambda/][my PeerTube channel: (phi (mu (lambda)))]].
