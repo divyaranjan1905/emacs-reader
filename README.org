@@ -122,14 +122,8 @@ The following steps assume you use =MINGW64=:
 
 First install the build dependencies:
 #+begin_src shell
-pacman -S make mingw-w64-x86_64-gcc git pkg-config
+pacman -S make mingw-w64-x86_64-gcc git pkg-config mingw-w64-x86_64-libmupdf
 #+end_src
-
-Then you need install =libmupdf=, unfortunately right now MSYS2's repo only has MuPDF 1.24.3, so you need this [[https://github.com/msys2/MINGW-packages/pull/24550][PR]],
-there are 2 ways to use this PR:
-
-1. Download the pre-compiled package from the PR's CI, then use =pacman -U= to install the package file.
-2. Clone the PR, goto the folder =mingw-w64-mupdf= then run command =makepkg -s= to compile MuPDF, and then use =pacman -U= to install the package file.
 
 After that, you can run =git clone https://codeberg.org/divyaranjan/emacs-reader.git= and then:
 #+begin_src sh
