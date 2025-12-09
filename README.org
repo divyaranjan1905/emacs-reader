@@ -22,10 +22,11 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 [[file:extras/emacs-reader-logo.png]]
 
-An all-in-one document reader for GNU Emacs, supporting all [[* Supported Formats][major document formats]]. This package intends to take from =doc-view=, =nov.el=, and =pdf-tools= and make them better. And as such, it is effectively a *drop-in replacement* for them
+An all-in-one document reader for GNU Emacs, supporting all [[* Supported Formats][major document formats]]. This package intends to take from =doc-view=, =nov.el=, and =pdf-tools= and make them better. And as such, it is effectively a *drop-in replacement* for them.
 
-* Screencast
-[[https://codeberg.org/divyaranjan/emacs-reader/raw/commit/9d62d26fe4ae63e5cecf57bc399b20f7feefb620/extras/emacs-reader-2025-05-14_04.32.41.gif]]
+* Presentation
+
+[[https://media.emacsconf.org/2025/emacsconf-2025-reader--an-introduction-to-the-emacs-reader--divy--main.webm]]
 
 * Supported Formats
 The Emacs Reader (via MuPDF) can open all the formats below.
@@ -184,10 +185,6 @@ Thus, we rely on the efficient MuPDF library as a shared object with which our d
 For understanding how dynamic modules work within Emacs, please consult the following article I wrote:
 
 https://www.phimulambda.org/blog/emacs-dynamic-module.html
-
-* Presentation
-
-[[https://www.youtube.com/watch?v=KQBXTSg_Occ][Presentation in EmacsConf 2025]]
 
 * Live Streams
 
