@@ -391,19 +391,23 @@ AMOUNT defaults to 1."
 	 (vscroll (+ prev-scroll amount)))
     (- (reader--set-window-vscroll nil vscroll) prev-scroll)))
 
-(defun reader-scroll-up-screen ()
-  "Scroll up the current page by a screen."
-  (interactive)
-  (let ((amount (- (window-body-height)
-		   next-screen-context-lines)))
+(defun reader-scroll-up-screen (&optional amount)
+  "Scroll up the current page by a screen.
+
+Unless AMOUNT is specified in which case we scroll by that value."
+  (interactive "P")
+  (let ((amount (or amount (- (window-body-height)
+			      next-screen-context-lines))))
     (when (= 0 (reader-scroll-up amount))
       (message "Beginning of page"))))
 
-(defun reader-scroll-down-screen ()
-  "Scroll down the current page by a screen."
-  (interactive)
-  (let ((amount (- (window-body-height)
-		   next-screen-context-lines)))
+(defun reader-scroll-down-screen (&optional amount)
+  "Scroll down the current page by a screen.
+
+Unless AMOUNT is specified in which case we scroll by that value."
+  (interactive "P")
+  (let ((amount (or amount (- (window-body-height)
+			      next-screen-context-lines))))
     (when (= 0 (reader-scroll-down amount))
       (message "End of page"))))
 
