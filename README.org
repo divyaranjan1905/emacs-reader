@@ -24,7 +24,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 An all-in-one document reader for GNU Emacs, supporting all [[* Supported Formats][major document formats]]. This package intends to take from =doc-view=, =nov.el=, and =pdf-tools= and make them better. And as such, it is effectively a *drop-in replacement* for them.
 
-* Presentation
+* Emacs Reader at Emacsconf 2025
 
 [[https://media.emacsconf.org/2025/emacsconf-2025-reader--an-introduction-to-the-emacs-reader--divy--main.webm]]
 
