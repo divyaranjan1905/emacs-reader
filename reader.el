@@ -171,14 +171,14 @@ other file format will simply not show up as a candidate."
   "Go to the next page of the document."
   (interactive)
   (if-let* ((status (reader-dyn--next-page)))
-      (force-mode-line-update t)
+      (force-mode-line-update)
     status))
 
 (reader--define-queue-command previous-page ()
   "Go to the previous page of the document."
   (interactive)
   (if-let* ((status (reader-dyn--prev-page)))
-      (force-mode-line-update t)
+      (force-mode-line-update)
     status))
 
 (defun reader-first-page ()
@@ -186,14 +186,14 @@ other file format will simply not show up as a candidate."
   (interactive)
   (reader-dyn--first-page)
   (reader--center-page)
-  (force-mode-line-update t))
+  (force-mode-line-update))
 
 (defun reader-last-page ()
   "Go to the last page of the document."
   (interactive)
   (reader-dyn--last-page)
   (reader--center-page)
-  (force-mode-line-update t))
+  (force-mode-line-update))
 
 (defun reader-goto-page (n)
   "Go to page number N in the current document."
