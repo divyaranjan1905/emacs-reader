@@ -740,8 +740,6 @@ It is hooked to `window-configuration-change-hook' to keep detecting."
   "r"       #'reader-rotate-clockwise
   "R"       #'reader-rotate-counter-clockwise
 
-  "<f5>"    #'reader-presentation-mode
-
   "o"       #'reader-outline-show
 
   "Q"       #'reader-close-doc)
