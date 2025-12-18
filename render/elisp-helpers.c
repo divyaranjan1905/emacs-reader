@@ -27,7 +27,8 @@
  * elisp_2_c_str - Convert an Elisp string to a C string.
  * @env: Pointer (of type `emacs_env') to the environment of the Emacs runtime
  * @value: The value of the Elisp string that is to be converted.  It will only
- * the value (in Elisp, (symbol-value str)) of the string, not the symbol.
+ * return the value (in Elisp, (symbol-value str)) of the string, not the
+ * symbol.
  * @buffer: The C character array that is going to store the converted string.
  * @size: Pointer to the length of the string after being converted, as
  * type size_t.
