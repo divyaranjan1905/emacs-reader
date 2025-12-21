@@ -170,16 +170,16 @@ other file format will simply not show up as a candidate."
 (reader--define-queue-command next-page ()
   "Go to the next page of the document."
   (interactive)
-  (if-let* ((status (reader-dyn--next-page)))
-      (force-mode-line-update)
-    status))
+  (when (reader-dyn--next-page)
+    ;; Must return `t' when the command succeeds.
+    (force-mode-line-update) t))
 
 (reader--define-queue-command previous-page ()
   "Go to the previous page of the document."
   (interactive)
-  (if-let* ((status (reader-dyn--prev-page)))
-      (force-mode-line-update)
-    status))
+  (when (reader-dyn--prev-page)
+    ;; Must return `t' when the command succeeds.
+    (force-mode-line-update) t))
 
 (defun reader-first-page ()
   "Go to the first page of the document."
