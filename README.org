@@ -107,7 +107,7 @@ You may replace the branch name as you need.
 Follow the instructions [[https://codeberg.org/divyaranjan/emacs-reader/issues/115][here]].
 
 ** MacOS
-Since MacOS’ package manager, Homebrew, already has the latest version of MuPDF (1.26.0), you don’t need the submodule at all. You just need to do:
+Install MuPDF using Homebrew,
 #+begin_src sh
   brew install gcc
   brew install make
@@ -126,7 +126,7 @@ And then use the straight or package-vc recipe from the [[* GNU/Linux][GNU/Linux
 Find more information [[https://codeberg.org/divyaranjan/emacs-reader/issues/142#issuecomment-8854941][here]].
 
 ** Windows
-With Windows, you need MSYS2 toolchain, first install MSYS2, then choose one of the environment that MSYS2 provided, on a modern 64bit Windows system, you want either =MINGW64= or =UCRT64=. If you have never tried MSYS2 before, we recommend =MINGW64= since this is the environment that used to build the official GNU/Emacs' Windows version.
+With Windows, you need MSYS2 toolchain, first install MSYS2, then choose one of the environment that MSYS2 provided, on a modern 64bit Windows system, you want either =MINGW64= or =UCRT64=. If you have never tried MSYS2 before, we recommend =MINGW64= since this is the environment that used to build the official GNU Emacs' Windows version.
 
 The following steps assume you use =MINGW64=:
 
