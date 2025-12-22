@@ -820,10 +820,11 @@ Keybindings:
 (define-minor-mode reader-presentation-mode
   "Toggle presentation view for current reader document."
   :lighter ""
-  (cond (reader-presentation-mode
-	 (setq-local mode-line-format nil)
-	 (reader-fit-to-height))
-	((kill-local-variable 'mode-line-format))))
+  (when (eq major-mode 'reader-mode)
+    (cond (reader-presentation-mode
+	   (setq-local mode-line-format nil)
+	   (reader-fit-to-height))
+	  ((kill-local-variable 'mode-line-format)))))
 
 ;; see `reader-saveplace' for details.
 ;;;###autoload
