@@ -751,6 +751,7 @@ It is hooked to `window-configuration-change-hook' to keep detecting."
 Keybindings:
 \\{reader-mode-map}"
   :group 'reader
+  :interactive nil
 
   (unless (and buffer-file-name
 	       (file-exists-p buffer-file-name)
