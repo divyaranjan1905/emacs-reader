@@ -62,7 +62,7 @@ The only thing this package depends on is =mupdf=, at minimum =v1.26.0=.
 For now, until the package has been published to GNU ELPA, the only way to install and use it is through locally cloning the repo and building it. This is different across platforms:
 
 ** GNU/Linux
-On GNU/Linux, all you need is: =gcc= and =make=. Then you can simply install through the Emacs’ built-in =package-vc= or the [[https://github.com/radian-software/straight.el][straight]] package manager. The built-in =package-vc= still has some quirks, but here are the recipes for both:
+On GNU/Linux, all you need is: =gcc= and =make=. Then you can simply install through the Emacs’ built-in =package-vc= (available in Emacs 30.1 or higher)or the [[https://github.com/radian-software/straight.el][straight]] package manager. The built-in =package-vc= still has some quirks, but here are the recipes for both:
 
 - =use-package= with =package-vc=:
    #+begin_src emacs-lisp
