@@ -85,6 +85,8 @@ Note that sometimes you may need to run =make clean all= to get rid of
 old artifacts before recompiling.
 #+end_center
 
+*** Debian GNU/Linux
+Follow this [[https://codeberg.org/divyaranjan/emacs-reader/issues/122#issuecomment-9315806][write up]].
 *** GNU Guix
 Using the [[https://guix.gnu.org/][GNU Guix]] package manager, you can get emacs-reader through the [[https://codeberg.org/divyaranjan/divya-lambda][divya-lambda]] Guix channel. Follow the instructions there to add the Guix channel to your configuration. Then all that remains to do is,
 #+begin_src bash
