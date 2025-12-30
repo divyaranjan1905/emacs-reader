@@ -2,6 +2,7 @@
 ##
 ## Copyright (C) 2025 Divya Ranjan Pattanaik
 ## Copyright (C) 2025 prom
+## Copyright (C) 2025 Tushar
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -110,9 +111,13 @@ LIB_NAME := render-core.$(SO)
 SRCS := render/elisp-helpers.c render/mupdf-helpers.c render/render-threads.c render/render-core.c render/render-theme.c
 OBJS := $(SRCS:%.c=%.o)
 
+EL_SRCS := reader.el reader-outline.el reader-saveplace.el
+ELC := $(EL_SRCS:%.el=%.elc)
+EFLAGS = -batch -Q --eval '(setq enable-dir-local-variables nil)' -L .
+
 .PHONY: all clean
 
-all: $(LIB_NAME)
+all: $(LIB_NAME) reader-autoloads.el $(ELC)
 
 $(LIB_NAME): $(OBJS)
 	$(CC) -o $@ $^ $(LDFLAGS)
@@ -120,8 +125,14 @@ $(LIB_NAME): $(OBJS)
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-clean:
-	rm -f $(OBJS) $(LIB_NAME)
+%.elc: %.el
+	emacs $(EFLAGS) -f batch-byte-compile $<
 
-autoloads:
-	emacs --batch --eval '(loaddefs-generate default-directory (file-name-concat default-directory "reader-autoloads.el"))'
+reader-autoloads.el: $(EL_SRCS)
+	rm -f reader-autoloads.el
+	emacs $(EFLAGS) --eval '(loaddefs-generate default-directory (file-name-concat default-directory "reader-autoloads.el"))'
+
+clean:
+	rm -f reader-autoloads.el
+	rm -f $(ELC)
+	rm -f $(OBJS) $(LIB_NAME)
