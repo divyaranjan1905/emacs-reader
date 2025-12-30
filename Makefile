@@ -57,6 +57,7 @@ endif
 CC := gcc
 CFLAGS += -Wall -Wextra -fPIC
 LDFLAGS :=
+EMACS = emacs --batch -Q --eval '(setq enable-dir-local-variables nil)' -L .
 
 ifeq ($(OS_NAME),Darwin)
   CFLAGS += -DMACOS
@@ -113,7 +114,6 @@ OBJS := $(SRCS:%.c=%.o)
 
 EL_SRCS := reader.el reader-outline.el reader-saveplace.el
 ELC := $(EL_SRCS:%.el=%.elc)
-EFLAGS = -batch -Q --eval '(setq enable-dir-local-variables nil)' -L .
 
 .PHONY: all clean
 
@@ -126,11 +126,11 @@ $(LIB_NAME): $(OBJS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 %.elc: %.el
-	emacs $(EFLAGS) -f batch-byte-compile $<
+	 $(EMACS) -f batch-byte-compile $<
 
 reader-autoloads.el: $(EL_SRCS)
 	rm -f reader-autoloads.el
-	emacs $(EFLAGS) --eval '(loaddefs-generate default-directory (file-name-concat default-directory "reader-autoloads.el"))'
+	$(EMACS) --eval '(loaddefs-generate default-directory (file-name-concat default-directory "reader-autoloads.el"))'
 
 clean:
 	rm -f reader-autoloads.el
