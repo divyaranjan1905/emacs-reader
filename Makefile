@@ -109,10 +109,10 @@ endif
 
 # --- Build Rules ---
 LIB_NAME := render-core.$(SO)
-SRCS := render/elisp-helpers.c render/mupdf-helpers.c render/render-threads.c render/render-core.c render/render-theme.c
+SRCS := $(wildcard render/*.c)
 OBJS := $(SRCS:%.c=%.o)
 
-EL_SRCS := reader.el reader-outline.el reader-saveplace.el
+EL_SRCS := $(filter-out .* reader-autoloads.el,$(wildcard *.el))
 ELC := $(EL_SRCS:%.el=%.elc)
 
 .PHONY: all clean
