@@ -74,7 +74,7 @@ reset_doc_state(DocState *state)
 		      .pagecount = 0,
 		      .frame_scale = 1,
                       .outline = NULL,
-		      };
+		      .invert = 0};
 }
 
 void

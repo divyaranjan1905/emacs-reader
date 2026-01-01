@@ -106,7 +106,7 @@ draw_page_thread(void *arg)
 		}
 		cp->pixmap = fz_new_pixmap_from_display_list(
 		    ctx, cp->display_list, ctm, fz_device_rgb(ctx), 0);
-		if (win_state->invert)
+		if (doc_state->invert)
 		{
 			fz_invert_pixmap_luminance(ctx, cp->pixmap);
 			fz_gamma_pixmap(ctx, cp->pixmap, 1 / 1.4f);
@@ -436,7 +436,7 @@ emacs_load_doc(emacs_env *env, ptrdiff_t nargs, emacs_value *args, void *data)
 		return EMACS_NIL;
 	}
 
-	init_main_ctx(doc_state); // Creates mupdf context with locks
+	init_main_ctx(doc_state);	// Creates mupdf context with locks
 	if (load_mupdf_doc(doc_state)
 	    == EXIT_FAILURE) // Opens the doc and sets pagecount
 	{
@@ -508,7 +508,7 @@ emacs_redisplay_doc(emacs_env *env, ptrdiff_t nargs, emacs_value *args,
 
 	if (doc_state && win_state)
 	{
-		win_state->invert = 0;
+		doc_state->invert = 0;
 		win_state->rotate = 0;
 		CachedPage *cp = win_state->current_cached_page;
 		DrawThreadArgs *draw_args = malloc(sizeof(DrawThreadArgs));

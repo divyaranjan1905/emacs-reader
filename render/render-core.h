@@ -58,7 +58,7 @@ typedef struct
 	fz_rect page_bbox;
 	fz_outline *outline;
 	float frame_scale; // Emacs' frame-scale-factor
-
+	int invert;
 } DocState;
 
 typedef struct
@@ -69,7 +69,6 @@ typedef struct
 	int current_window_index;
 	CachedPage *current_cached_page;
 	int current_page_number;
-	int invert;
 	int rotate;
 } EmacsWinState;
 

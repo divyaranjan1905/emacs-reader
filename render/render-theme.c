@@ -45,7 +45,7 @@ emacs_set_dark_theme(emacs_env *env, ptrdiff_t nargs, emacs_value *args,
 	EmacsWinState *win_state = get_win_state_ptr(env, current_doc_overlay);
 	if (doc_state && win_state)
 	{
-		win_state->invert ^= 1;
+		doc_state->invert ^= 1;
 		CachedPage *cp = win_state->current_cached_page;
 		DrawThreadArgs *draw_args = malloc(sizeof(DrawThreadArgs));
 		draw_args->doc_state = doc_state;
