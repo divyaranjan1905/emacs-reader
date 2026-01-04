@@ -201,7 +201,7 @@ https://www.phimulambda.org/blog/emacs-dynamic-module.html
 
 I have been streaming the development of this package on [[https://tv.dyne.org/c/phimulambda/][my PeerTube channel: (phi (mu (lambda)))]].
 
-[[https://tv.dyne.org/w/p/2A6UVt21hayJ3dVj5cU4yA][The streams]] happen on *Sundays, biweekly at around 5:30 PM UTC*. Follow the channel on Peertube or my [[https://mathstodon.xyz/@divyaranjan][Mastodon]] to be notified when I stream. You can also find some stream notes [[file:doc/][here]].
+[[https://tv.dyne.org/w/p/2A6UVt21hayJ3dVj5cU4yA][The streams]] happen on *Sundays, biweekly at around 2:30 PM UTC*. Follow the channel on Peertube or my [[https://mathstodon.xyz/@divyaranjan][Mastodon]] to be notified when I stream. You can also find some stream notes [[file:doc/][here]].
 
 If you wish to join the discussion for the package, you should join the IRC channel =#phi-mu-lambda= on [[https://libera.chat/][Libera]].
 
