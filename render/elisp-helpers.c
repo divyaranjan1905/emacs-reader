@@ -334,6 +334,24 @@ init_overlay(emacs_env *env, emacs_value window)
 	return overlay;
 }
 
+/*
+ * Check whether the overlay is in the correct
+ * buffer or not
+ */
+bool
+check_current_overlay(emacs_env *env, emacs_value overlay)
+{
+	if (overlay == EMACS_NIL)
+		return false;
+
+	emacs_value overlay_buffer = env->funcall(
+	    env, env->intern(env, "overlay-buffer"), 1, &overlay);
+	emacs_value current_buffer
+	    = env->funcall(env, env->intern(env, "current-buffer"), 0, NULL);
+
+	return env->eq(env, overlay_buffer, current_buffer);
+}
+
 /**
  * get_current_doc_overlay - Retrieve the stored overlay object for the
  * document as a window parameter.

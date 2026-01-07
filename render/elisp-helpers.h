@@ -59,6 +59,8 @@ void
 set_current_pagecount(emacs_env *env, DocState *state);
 emacs_value
 init_overlay(emacs_env *env, emacs_value window);
+bool
+check_current_overlay(emacs_env *env, emacs_value overlay);
 emacs_value
 get_current_doc_overlay(emacs_env *env);
 float
@@ -67,7 +69,6 @@ void
 emacs_message(emacs_env *env, char *str);
 void
 permanent_buffer_local_var(emacs_env *env, char *symbol);
-
 void
 display_img_to_overlay(emacs_env *env, EmacsWinState *win_state, char *img_data,
 		       size_t img_size, emacs_value buffer_overlay);
