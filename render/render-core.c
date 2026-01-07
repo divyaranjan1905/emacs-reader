@@ -436,7 +436,7 @@ emacs_load_doc(emacs_env *env, ptrdiff_t nargs, emacs_value *args, void *data)
 		return EMACS_NIL;
 	}
 
-	init_main_ctx(doc_state);	// Creates mupdf context with locks
+	init_main_ctx(doc_state); // Creates mupdf context with locks
 	if (load_mupdf_doc(doc_state)
 	    == EXIT_FAILURE) // Opens the doc and sets pagecount
 	{
@@ -504,6 +504,12 @@ emacs_redisplay_doc(emacs_env *env, ptrdiff_t nargs, emacs_value *args,
 
 	DocState *doc_state = get_doc_state_ptr(env);
 	emacs_value current_doc_overlay = get_current_doc_overlay(env);
+	if (!check_current_overlay(env, current_doc_overlay))
+	{
+		emacs_message(env, "Invalid overlay state: reinitializing");
+		return EMACS_NIL;
+	}
+
 	EmacsWinState *win_state = get_win_state_ptr(env, current_doc_overlay);
 
 	if (doc_state && win_state)
@@ -582,6 +588,12 @@ emacs_next_page(emacs_env *env, ptrdiff_t nargs, emacs_value *args, void *data)
 	(void)data;
 	DocState *doc_state = get_doc_state_ptr(env);
 	emacs_value current_doc_overlay = get_current_doc_overlay(env);
+	if (!check_current_overlay(env, current_doc_overlay))
+	{
+		emacs_message(env, "Invalid overlay state: reinitializing");
+		return EMACS_NIL;
+	}
+
 	EmacsWinState *win_state = get_win_state_ptr(env, current_doc_overlay);
 
 	if (doc_state && win_state)
@@ -643,6 +655,12 @@ emacs_prev_page(emacs_env *env, ptrdiff_t nargs, emacs_value *args, void *data)
 	(void)data;
 	DocState *doc_state = get_doc_state_ptr(env);
 	emacs_value current_doc_overlay = get_current_doc_overlay(env);
+	if (!check_current_overlay(env, current_doc_overlay))
+	{
+		emacs_message(env, "Invalid overlay state: reinitializing");
+		return EMACS_NIL;
+	}
+
 	EmacsWinState *win_state = get_win_state_ptr(env, current_doc_overlay);
 
 	if (doc_state && win_state)
@@ -700,6 +718,12 @@ emacs_first_page(emacs_env *env, ptrdiff_t nargs, emacs_value *args, void *data)
 	(void)data;
 	DocState *doc_state = get_doc_state_ptr(env);
 	emacs_value current_doc_overlay = get_current_doc_overlay(env);
+	if (!check_current_overlay(env, current_doc_overlay))
+	{
+		emacs_message(env, "Invalid overlay state: reinitializing");
+		return EMACS_NIL;
+	}
+
 	EmacsWinState *win_state = get_win_state_ptr(env, current_doc_overlay);
 
 	if (doc_state && win_state)
@@ -745,6 +769,12 @@ emacs_last_page(emacs_env *env, ptrdiff_t nargs, emacs_value *args, void *data)
 	(void)data;
 	DocState *doc_state = get_doc_state_ptr(env);
 	emacs_value current_doc_overlay = get_current_doc_overlay(env);
+	if (!check_current_overlay(env, current_doc_overlay))
+	{
+		emacs_message(env, "Invalid overlay state: reinitializing");
+		return EMACS_NIL;
+	}
+
 	EmacsWinState *win_state = get_win_state_ptr(env, current_doc_overlay);
 
 	if (doc_state && win_state)
@@ -790,6 +820,12 @@ emacs_goto_page(emacs_env *env, ptrdiff_t nargs, emacs_value *args, void *data)
 	int page_number = env->extract_integer(env, args[0]);
 	DocState *doc_state = get_doc_state_ptr(env);
 	emacs_value current_doc_overlay = get_current_doc_overlay(env);
+	if (!check_current_overlay(env, current_doc_overlay))
+	{
+		emacs_message(env, "Invalid overlay state: reinitializing");
+		return EMACS_NIL;
+	}
+
 	EmacsWinState *win_state = get_win_state_ptr(env, current_doc_overlay);
 
 	if (doc_state && win_state)
@@ -840,6 +876,12 @@ emacs_doc_scale_page(emacs_env *env, ptrdiff_t nargs, emacs_value *args,
 	(void)data;
 	DocState *doc_state = get_doc_state_ptr(env);
 	emacs_value current_doc_overlay = get_current_doc_overlay(env);
+	if (!check_current_overlay(env, current_doc_overlay))
+	{
+		emacs_message(env, "Invalid overlay state: reinitializing");
+		return EMACS_NIL;
+	}
+
 	EmacsWinState *win_state = get_win_state_ptr(env, current_doc_overlay);
 	float scale_factor = env->extract_float(env, args[0]);
 
@@ -892,6 +934,12 @@ emacs_doc_rotate(emacs_env *env, ptrdiff_t nargs, emacs_value *args, void *data)
 	(void)data;
 	DocState *doc_state = get_doc_state_ptr(env);
 	emacs_value current_doc_overlay = get_current_doc_overlay(env);
+	if (!check_current_overlay(env, current_doc_overlay))
+	{
+		emacs_message(env, "Invalid overlay state: reinitializing");
+		return EMACS_NIL;
+	}
+
 	EmacsWinState *win_state = get_win_state_ptr(env, current_doc_overlay);
 	int rotation_deg = env->extract_integer(env, args[0]);
 	if (doc_state && win_state)
