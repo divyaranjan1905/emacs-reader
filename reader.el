@@ -159,7 +159,7 @@ other file format will simply not show up as a candidate."
 			     (lambda (f)
 			       (or (file-directory-p f)
 				   (string-match-p regexp f))))))
-		 (list file)))
+		 (list (expand-file-name file))))
   (switch-to-buffer (create-file-buffer document))
   (setq buffer-file-name document)
   (insert "\n")
