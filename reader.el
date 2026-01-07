@@ -359,17 +359,19 @@ not return the actual horizontal scroll value; for that, see
 
 WINDOW must be a valid window and defaults to the selected one."
   (when-let* ((overlay (reader-current-doc-overlay window))
-              ((overlayp overlay)))
-    (let* ((window-width (window-body-width window t))
-           (doc-image-width (car (reader--get-current-doc-image-size window)))
-           (max-left-offset (max 0 (- window-width doc-image-width)))
-           (overlay-offset `(space :width (,max-left-offset)))
-           (pixel-per-col (reader--get-pixel-per-col window))
-           (doc-left-offset (- window-width doc-image-width))
-           (doc-center-offset (/ doc-left-offset 2))
-           (scroll-offset (round (/ doc-center-offset pixel-per-col))))
-      (overlay-put overlay 'line-prefix overlay-offset)
-      (reader--set-window-hscroll window scroll-offset t))))
+              ((overlayp overlay))
+	      (window-width (window-body-width window t))
+              (doc-image-width (car (reader--get-current-doc-image-size window)))
+	      (max-left-offset (max 0 (- window-width doc-image-width)))
+	      (overlay-offset `(space :width (,max-left-offset)))
+	      (pixel-per-col (reader--get-pixel-per-col window))
+	      (doc-left-offset (- window-width doc-image-width))
+              (doc-center-offset (/ doc-left-offset 2))
+              (scroll-offset (round (/ doc-center-offset pixel-per-col))))
+    ;; Add prefix so that the page is at the leftmost point of the window.
+    (overlay-put overlay 'line-prefix overlay-offset)
+    ;; scroll window back to the center of the doc
+    (reader--set-window-hscroll window scroll-offset t)))
 
 (defun reader-scroll-up (&optional amount)
   "Scroll up the current page by AMOUNT.
