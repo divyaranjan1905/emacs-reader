@@ -358,18 +358,18 @@ not return the actual horizontal scroll value; for that, see
   "Center the document with respect to WINDOW.
 
 WINDOW must be a valid window and defaults to the selected one."
-  (let* ((window-width (window-body-width window t))
-	 (doc-image-width (car (reader--get-current-doc-image-size window)))
-	 (max-left-offset (max 0 (- window-width doc-image-width)))
-	 (overlay-offset `(space :width (,max-left-offset)))
-	 (pixel-per-col (reader--get-pixel-per-col window))
-	 (doc-left-offset (- window-width doc-image-width))
-	 (doc-center-offset (/ doc-left-offset 2))
-	 (scroll-offset (round (/ doc-center-offset pixel-per-col))))
-    ;; Add prefix so that the page is at the leftmost point of the window.
-    (overlay-put (reader-current-doc-overlay window) 'line-prefix overlay-offset)
-    ;; scroll window back to the center of the doc
-    (reader--set-window-hscroll window scroll-offset t)))
+  (when-let* ((overlay (reader-current-doc-overlay window))
+              ((overlayp overlay)))
+    (let* ((window-width (window-body-width window t))
+           (doc-image-width (car (reader--get-current-doc-image-size window)))
+           (max-left-offset (max 0 (- window-width doc-image-width)))
+           (overlay-offset `(space :width (,max-left-offset)))
+           (pixel-per-col (reader--get-pixel-per-col window))
+           (doc-left-offset (- window-width doc-image-width))
+           (doc-center-offset (/ doc-left-offset 2))
+           (scroll-offset (round (/ doc-center-offset pixel-per-col))))
+      (overlay-put overlay 'line-prefix overlay-offset)
+      (reader--set-window-hscroll window scroll-offset t))))
 
 (defun reader-scroll-up (&optional amount)
   "Scroll up the current page by AMOUNT.
@@ -658,17 +658,37 @@ It is hooked to `window-configuration-change-hook' to keep detecting."
 
 (defun reader--window-create-function (window)
   "Create window overlay for WINDOW."
-  (unless (window-parameter window 'overlay)
-    (let* ((last-win-page (window-parameter (old-selected-window) 'page))
-	   (last-win-scale (window-parameter (old-selected-window) 'scale))
-	   (page (or last-win-page reader--recent-pagenumber-fallback))
-	   (scale (or last-win-scale reader--recent-scale-fallback)))
-      (reader-dyn--window-create window)
-      (set-window-parameter window 'page last-win-page)
-      (with-selected-window window
-	(reader-goto-page page)
-	(reader-doc-scale-page scale)
-	(reader--center-page)))))
+  (let ((existing-overlay (window-parameter window 'overlay)))
+    ;; Check if overlay exists but belongs to wrong buffer
+    (when (and existing-overlay
+               (not (eq (overlay-buffer existing-overlay) (current-buffer))))
+      ;; Clear stale overlay
+      (set-window-parameter window 'overlay nil)
+      (set-window-parameter window 'page nil)
+      (set-window-parameter window 'scale nil)
+      (setq existing-overlay nil))
+
+    (unless (window-parameter window 'overlay)
+      (let* ((last-win-page (window-parameter (old-selected-window) 'page))
+             (last-win-scale (window-parameter (old-selected-window) 'scale))
+             (page (or last-win-page reader--recent-pagenumber-fallback))
+             (scale (or last-win-scale reader--recent-scale-fallback)))
+        (reader-dyn--window-create window)
+        (set-window-parameter window 'page last-win-page)
+        (with-selected-window window
+          (reader-goto-page page)
+          (reader-doc-scale-page scale)
+          (reader--center-page))))))
+
+(defun reader--cleanup-stale-overlay (window)
+  "Clean up WINDOW's overlay if it belongs to a different buffer."
+  (when (windowp window)
+    (when-let* ((overlay (window-parameter window 'overlay))
+		((overlayp overlay))
+		((not (eq (overlay-buffer overlay) (window-buffer window)))))
+      (set-window-parameter window 'overlay nil)
+      (set-window-parameter window 'page nil)
+      (set-window-parameter window 'scale nil))))
 
 (defun reader--window-close-function (overlay)
   "Properly close the window belonging to OVERLAY."
@@ -795,7 +815,8 @@ Keybindings:
 
   (funcall reader-default-fit)
   (add-hook 'window-size-change-functions #'reader--center-page nil t)
-  (add-hook 'window-configuration-change-hook #'reader--manage-window-overlays nil t))
+  (add-hook 'window-configuration-change-hook #'reader--manage-window-overlays nil t)
+  (add-hook 'window-buffer-change-functions #'reader--cleanup-stale-overlay nil t))
 
 (defun reader-mode-line ()
   "Set custom mode-line interface when reading documents."
