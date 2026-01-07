@@ -363,11 +363,23 @@ check_current_overlay(emacs_env *env, emacs_value overlay)
 emacs_value
 get_current_doc_overlay(emacs_env *env)
 {
-
 	emacs_value curr_win = EMACS_CURR_WIN;
 	emacs_value current_overlay = env->funcall(
 	    env, env->intern(env, "window-parameter"), 2,
 	    (emacs_value[]){ curr_win, env->intern(env, "overlay") });
+
+	// Check if overlay is valid for current buffer
+	if (current_overlay != EMACS_NIL
+	    && !check_current_overlay(env, current_overlay))
+	{
+		// Stale overlay, clear it
+		env->funcall(env, env->intern(env, "set-window-parameter"), 3,
+			     (emacs_value[]){ curr_win,
+					      env->intern(env, "overlay"),
+					      EMACS_NIL });
+		return EMACS_NIL;
+	}
+
 	return current_overlay;
 }
 
