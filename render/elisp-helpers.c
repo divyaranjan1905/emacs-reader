@@ -236,7 +236,7 @@ get_win_state_ptr(emacs_env *env, emacs_value overlay)
 	emacs_value ptr = env->funcall(
 	    env, env->intern(env, "overlay-get"), 2,
 	    (emacs_value[]){ overlay, env->intern(env, "win-state") });
-	if (ptr == NULL)
+	if (env->eq(env, ptr, EMACS_NIL))
 		emacs_message(
 		    env,
 		    "Selected window doesn't have a pointer to EmacsWinState.");
