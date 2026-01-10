@@ -194,8 +194,8 @@ init_doc_state_ptr(emacs_env *env)
  * get_doc_state_ptr - Retrieve the DocState pointer stored in Elisp.
  * @env:    The Emacs environment pointer.
  *
- * Return: A pointer to the current `DocState` (or NULL if the symbol is unbound
- * or not a valid user pointer.).
+ * Return: A pointer to the current `DocState` (or NULL if the symbol is
+ * unbound or not a valid user pointer.).
  */
 
 DocState *
@@ -204,6 +204,14 @@ get_doc_state_ptr(emacs_env *env)
 	emacs_value ptr_sym = env->intern(env, "reader-current-doc-state-ptr");
 	emacs_value ptr
 	    = env->funcall(env, env->intern(env, "symbol-value"), 1, &ptr_sym);
+
+	if (env->eq(env, ptr, EMACS_NIL))
+	{
+		fprintf(stderr, "No valid DocState user pointer found.");
+		emacs_message(env, "No valid DocState user pointer foud.");
+		return NULL;
+	}
+
 	DocState *state = env->get_user_ptr(env, ptr);
 	return state;
 }
@@ -233,13 +241,25 @@ init_win_state_ptr(emacs_env *env, DocState *doc_state, emacs_value window)
 EmacsWinState *
 get_win_state_ptr(emacs_env *env, emacs_value overlay)
 {
+	if (env->eq(env, overlay, EMACS_NIL))
+	{
+		emacs_message(env,
+			      "Selected window doesn't have a valid overlay.");
+		return NULL;
+	}
+
 	emacs_value ptr = env->funcall(
 	    env, env->intern(env, "overlay-get"), 2,
 	    (emacs_value[]){ overlay, env->intern(env, "win-state") });
+
 	if (env->eq(env, ptr, EMACS_NIL))
+	{
 		emacs_message(
 		    env,
 		    "Selected window doesn't have a pointer to EmacsWinState.");
+		return NULL;
+	}
+
 	EmacsWinState *win_state = env->get_user_ptr(env, ptr);
 	return win_state;
 }
