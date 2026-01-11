@@ -216,6 +216,14 @@ get_doc_state_ptr(emacs_env *env)
 	return state;
 }
 
+void
+clear_doc_state_ptr(emacs_env *env)
+{
+	emacs_value sym = env->intern(env, "reader-current-doc-state-ptr");
+	env->funcall(env, env->intern(env, "set"), 2,
+		     (emacs_value[]){ sym, EMACS_NIL });
+}
+
 EmacsWinState *
 init_win_state_ptr(emacs_env *env, DocState *doc_state, emacs_value window)
 {

@@ -45,6 +45,8 @@ DocState *
 init_doc_state_ptr(emacs_env *env);
 DocState *
 get_doc_state_ptr(emacs_env *env);
+void
+clear_doc_state_ptr(emacs_env *env);
 EmacsWinState *
 init_win_state_ptr(emacs_env *env, DocState *doc_state, emacs_value window);
 EmacsWinState *
