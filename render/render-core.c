@@ -558,21 +558,35 @@ emacs_close_doc(emacs_env *env, ptrdiff_t nargs, emacs_value *args, void *data)
 	(void)data;
 
 	DocState *state = get_doc_state_ptr(env);
+	if (!state)
+		return EMACS_NIL;
+
 	emacs_value overlay = get_current_doc_overlay(env);
 
-	if (env->eq(env, overlay, EMACS_NIL))
+	// If we have an overlay for the currently selected window, clear win
+	// cache
+	if (!env->eq(env, overlay, EMACS_NIL))
 	{
-		return EMACS_NIL;
+		EmacsWinState *win_state = get_win_state_ptr(env, overlay);
+		if (win_state)
+			free_cache_window(state, win_state);
 	}
 
-	EmacsWinState *win_state = get_win_state_ptr(env, overlay);
-	free_cache_window(state, win_state);
+	// Always free the document pool
 	free_cached_pages_pool(state);
-	fz_drop_outline(state->ctx, state->outline);
-	fz_drop_document(state->ctx, state->doc);
-	fz_drop_context(state->ctx);
+
+	if (state->outline)
+		fz_drop_outline(state->ctx, state->outline);
+	if (state->doc)
+		fz_drop_document(state->ctx, state->doc);
+	if (state->ctx)
+		fz_drop_context(state->ctx);
+
 	reset_doc_state(state);
 	free(state);
+
+	// clear the buffer-local user ptr to prevent double
+	clear_doc_state_ptr(env);
 	return EMACS_T;
 }
 
