@@ -596,7 +596,6 @@ See also `reader-shrink-size'."
 
 Intended for use in `kill-buffer-hook'."
   (when (derived-mode-p 'reader-mode)
-    (reader-dyn--close-doc)
     (ignore-errors
       (reader-dyn--close-doc))))
 (add-hook 'kill-buffer-hook 'reader--clear-doc-memory)
